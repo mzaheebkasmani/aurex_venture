@@ -1,0 +1,411 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --brand: #9b51e0;
+    --brand-light: #b070f0;
+    --brand-dark: #7b3bcc;
+    
+    --surface-50: #f8fafc;
+    --surface-100: #f1f5f9;
+    --surface-900: #0d111c;
+    --surface-950: #06080e;
+    
+    --text-primary: #ffffff;
+    --text-secondary: #94a3b8; /* slate-400 */
+    --text-muted: #cbd5e1; /* slate-300 */
+    
+    --border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .light {
+    --brand: #8a3cdb;
+    --brand-light: #a855f7;
+    --brand-dark: #6d28d9;
+
+    /* Soft, comfortable off-white / light slate canvas (avoids blinding pure white) */
+    --surface-950: #f8fafc;
+    /* Crisp elevated white card surface */
+    --surface-900: #ffffff;
+    
+    --text-primary: #0f172a; /* slate-900 */
+    --text-secondary: #475569; /* slate-600 */
+    --text-muted: #64748b; /* slate-500 */
+    
+    --border-color: rgba(15, 23, 42, 0.08);
+  }
+}
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-brand: var(--brand);
+  --color-brand-light: var(--brand-light);
+  --color-brand-dark: var(--brand-dark);
+  
+  --color-surface-50: var(--surface-50);
+  --color-surface-100: var(--surface-100);
+  --color-surface-900: var(--surface-900);
+  --color-surface-950: var(--surface-950);
+}
+
+/* Custom utilities */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .glass {
+    @apply bg-surface-950/70 backdrop-blur-md border;
+    border-color: var(--border-color);
+  }
+}
+
+/* Base styles */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color: var(--text-primary);
+  }
+  
+  body {
+    @apply bg-surface-950 text-white transition-colors duration-300;
+  }
+
+  /* Light mode canvas: soft, soothing ambient gradient with cool blue shades emerging from sides */
+  .light body {
+    background-color: #f8fafc;
+    background-image: 
+      radial-gradient(ellipse 650px 850px at 0% 5%, rgba(56, 189, 248, 0.16) 0%, transparent 60%),
+      radial-gradient(ellipse 650px 850px at 100% 18%, rgba(96, 165, 250, 0.14) 0%, transparent 60%),
+      radial-gradient(ellipse 700px 900px at 0% 32%, rgba(56, 189, 248, 0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 650px 850px at 100% 48%, rgba(96, 165, 250, 0.14) 0%, transparent 60%),
+      radial-gradient(ellipse 700px 900px at 0% 64%, rgba(56, 189, 248, 0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 650px 850px at 100% 78%, rgba(96, 165, 250, 0.14) 0%, transparent 60%),
+      radial-gradient(ellipse 700px 900px at 0% 92%, rgba(56, 189, 248, 0.13) 0%, transparent 60%),
+      radial-gradient(ellipse 600px 800px at 100% 98%, rgba(147, 51, 234, 0.09) 0%, transparent 60%);
+    background-attachment: fixed;
+    color: var(--text-primary);
+  }
+  
+  /* Selection styling */
+  ::selection {
+    background-color: var(--brand);
+    color: #ffffff;
+  }
+
+  /* Base text colors in light mode */
+  .light body {
+    color: #0f172a;
+  }
+
+  .light h1,
+  .light h2,
+  .light h3,
+  .light h4,
+  .light h5,
+  .light h6 {
+    color: #0f172a;
+  }
+
+  /* All text-white on light canvas/cards becomes dark slate */
+  .light .text-white {
+    color: #0f172a !important;
+  }
+  
+  .light .text-slate-300 {
+    color: #334155 !important;
+  }
+
+  .light .text-slate-400 {
+    color: #475569 !important;
+  }
+
+  .light p {
+    color: #334155;
+  }
+
+  /* Dedicated Hero Pill Badge & Hero Description rules */
+  .hero-pill-badge {
+    color: #c084fc;
+    background-color: rgba(155, 81, 224, 0.15);
+    border: 1px solid rgba(155, 81, 224, 0.4);
+  }
+  .light .hero-pill-badge {
+    color: #581c87 !important; /* Deep dark purple - high contrast */
+    background-color: rgba(138, 60, 219, 0.12) !important;
+    border: 1px solid rgba(138, 60, 219, 0.45) !important;
+    font-weight: 700 !important;
+  }
+
+  .hero-description {
+    color: #cbd5e1;
+  }
+  .light .hero-description {
+    color: #1e293b !important; /* Slate-800 - dark, crystal-clear, bold and comfortable to read */
+    font-weight: 450 !important;
+  }
+
+  /* Specific Logo theming - 100% reliable across themes */
+  .logo-icon-theme {
+    filter: none;
+    opacity: 1;
+  }
+  .light .logo-icon-theme {
+    filter: brightness(0) saturate(100%);
+    opacity: 0.92;
+  }
+
+  .logo-text-theme {
+    color: #ffffff;
+  }
+  .light .logo-text-theme {
+    color: #0f172a !important;
+  }
+
+  .logo-subtext-theme {
+    color: #cbd5e1;
+  }
+  .light .logo-subtext-theme {
+    color: #475569 !important;
+  }
+
+  /* CRITICAL: ONLY elements genuinely inside colored/dark containers stay pure white */
+  .light .preserve-white,
+  .light .preserve-white h1,
+  .light .preserve-white h2,
+  .light .preserve-white h3,
+  .light .preserve-white h4,
+  .light .preserve-white p,
+  .light .preserve-white > span,
+  .light .preserve-white a,
+  .light .preserve-white .text-white,
+  .light footer,
+  .light footer h1,
+  .light footer h2,
+  .light footer h3,
+  .light footer h4,
+  .light footer p,
+  .light footer a,
+  .light footer span,
+  .light footer .text-white,
+  .light #hero-stats,
+  .light #hero-stats h1,
+  .light #hero-stats h2,
+  .light #hero-stats h3,
+  .light #hero-stats p,
+  .light #hero-stats span,
+  .light #hero-stats .text-white,
+  .light button.bg-brand,
+  .light button.bg-brand > span,
+  .light button.bg-brand .text-white,
+  .light a.bg-brand,
+  .light a.bg-brand > span,
+  .light a.bg-brand .text-white {
+    color: #ffffff !important;
+  }
+
+  /* Meeting Banner Capsule styling: guaranteed bright white title & dark text inside white pill */
+  .meeting-banner-capsule {
+    background: linear-gradient(135deg, #8a3cdb 0%, #9333ea 50%, #7928ca 100%) !important;
+  }
+  .meeting-banner-capsule > span:first-child,
+  .light .meeting-banner-capsule > span:first-child {
+    color: #ffffff !important;
+  }
+  .meeting-banner-capsule .bg-white,
+  .meeting-banner-capsule .bg-white *,
+  .meeting-banner-capsule .bg-white span,
+  .meeting-banner-capsule .bg-white svg,
+  .light .meeting-banner-capsule .bg-white,
+  .light .meeting-banner-capsule .bg-white *,
+  .light .meeting-banner-capsule .bg-white span,
+  .light .meeting-banner-capsule .bg-white svg {
+    color: #0f172a !important;
+    stroke: #0f172a !important;
+    fill: none;
+  }
+
+  .light footer .text-white\/90,
+  .light #hero-stats .text-white\/90,
+  .light .preserve-white .text-white\/90 {
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+
+  .light footer .text-white\/85,
+  .light #hero-stats .text-white\/85,
+  .light .preserve-white .text-white\/85 {
+    color: rgba(255, 255, 255, 0.85) !important;
+  }
+
+  .light footer .text-white\/80,
+  .light #hero-stats .text-white\/80,
+  .light .preserve-white .text-white\/80 {
+    color: rgba(255, 255, 255, 0.8) !important;
+  }
+
+  .light footer .text-white\/70,
+  .light #hero-stats .text-white\/70,
+  .light .preserve-white .text-white\/70 {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+
+  /* Buttons or pills with white backgrounds inside dark/brand containers must ALWAYS keep dark text */
+  .light .bg-white,
+  .light .bg-white *,
+  .light a .bg-white,
+  .light a .bg-white *,
+  .light a.bg-brand .bg-white,
+  .light a.bg-brand .bg-white *,
+  .light button.bg-brand .bg-white,
+  .light button.bg-brand .bg-white *,
+  .light .preserve-white .bg-white,
+  .light .preserve-white .bg-white *,
+  .light .text-slate-900 {
+    color: #0f172a !important;
+  }
+
+  /* Form inputs, textareas, and selects in light mode (exempting chatbot) */
+  .light input:not([class*="bg-transparent"]):not(.aurex-chat-input),
+  .light textarea:not([class*="bg-transparent"]):not(.aurex-chat-input) {
+    background-color: #ffffff !important;
+    border-color: rgba(15, 23, 42, 0.12) !important;
+    color: #0f172a !important;
+  }
+
+  /* ========================================================= */
+  /* AUREX AI CHATBOT - GUARANTEED HIGH CONTRAST IN ALL THEMES */
+  /* ========================================================= */
+  .aurex-chat-dialog,
+  .light .aurex-chat-dialog {
+    background-color: rgba(6, 8, 14, 0.98) !important;
+    border-color: rgba(139, 92, 246, 0.35) !important;
+  }
+
+  /* User Message Bubble: Always pure white text on purple gradient */
+  .aurex-chat-user-bubble,
+  .light .aurex-chat-user-bubble,
+  .aurex-chat-user-bubble *,
+  .light .aurex-chat-user-bubble * {
+    color: #ffffff !important;
+  }
+
+  /* Bot Message Bubble: Always crisp slate-100 text */
+  .aurex-chat-bot-bubble,
+  .light .aurex-chat-bot-bubble,
+  .aurex-chat-bot-bubble *,
+  .light .aurex-chat-bot-bubble * {
+    color: #f1f5f9 !important;
+  }
+
+  /* Glowing Cyan Highlights for Bot Bolds/Headers */
+  .aurex-chat-bot-bubble strong,
+  .light .aurex-chat-bot-bubble strong,
+  .aurex-chat-bot-bubble b,
+  .light .aurex-chat-bot-bubble b {
+    color: #38bdf8 !important;
+    font-weight: 700 !important;
+  }
+
+  /* Chatbot Input Field: Always clear, crisp white text on dark background */
+  .aurex-chat-input,
+  .light .aurex-chat-input,
+  .light input.aurex-chat-input {
+    background-color: #0f172a !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    caret-color: #38bdf8 !important;
+  }
+
+  .aurex-chat-input::placeholder,
+  .light .aurex-chat-input::placeholder {
+    color: #94a3b8 !important;
+    opacity: 1 !important;
+  }
+
+  .light input:not(.aurex-chat-input)::placeholder,
+  .light textarea:not(.aurex-chat-input)::placeholder {
+    color: #94a3b8 !important;
+  }
+
+  .light select {
+    background-color: #ffffff !important;
+    border-color: rgba(15, 23, 42, 0.12) !important;
+    color: #0f172a !important;
+  }
+
+  .light select option {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+  }
+
+  /* Cards and borders in light mode */
+  .light .border-white\/10 {
+    border-color: rgba(15, 23, 42, 0.08) !important;
+  }
+
+  .light .border-white\/20 {
+    border-color: rgba(15, 23, 42, 0.12) !important;
+  }
+  
+  .light .bg-white\/5 {
+    background-color: #ffffff !important;
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+  }
+  
+  .light .hover\:bg-white\/10:hover {
+    background-color: rgba(15, 23, 42, 0.06) !important;
+  }
+
+  /* Overrides to preserve transparency in footer & brand elements */
+  .light footer .bg-white\/5,
+  .light .bg-brand .bg-white\/5 {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    box-shadow: none !important;
+  }
+
+  .light footer .border-white\/20,
+  .light .bg-brand .border-white\/20 {
+    border-color: rgba(255, 255, 255, 0.25) !important;
+  }
+
+  .light footer .border-white\/10,
+  .light .bg-brand .border-white\/10 {
+    border-color: rgba(255, 255, 255, 0.15) !important;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-surface-950;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-brand/50 rounded-full hover:bg-brand transition-colors;
+  }
+
+  /* Ripple Animation */
+  @keyframes ripple {
+    0% {
+      width: 0;
+      height: 0;
+      opacity: 0.5;
+    }
+    100% {
+      width: 500px;
+      height: 500px;
+      opacity: 0;
+    }
+  }
+
+  .animate-ripple {
+    animation: ripple 0.6s linear;
+  }
+}
+
+

@@ -1,0 +1,15 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120' width='120' height='120' fill='none'>
+  <!-- Modern Geometric Ribbon 'A' Logo for Aurex Venture -->
+  <defs>
+    <linearGradient id='brandGrad' x1='0%' y1='0%' x2='100%' y2='100%'>
+      <stop offset='0%' stop-color='#b070f0' />
+      <stop offset='100%' stop-color='#7b3bcc' />
+    </linearGradient>
+  </defs>
+  <!-- Outer Ribbon A -->
+  <path d='M60 14L18 92C16 96 19 100 24 100H42C45 100 48 98 50 94L60 72L70 94C72 98 75 100 78 100H96C101 100 104 96 102 92L60 14Z' fill='#FFFFFF'/>
+  <!-- Inner A Cutout -->
+  <path d='M60 36L46 64H74L60 36Z' fill='#050505'/>
+  <!-- Dynamic Angular Crossbar Ribbon with Brand Color -->
+  <path d='M34 68L86 68L78 84L42 84Z' fill='url(#brandGrad)'/>
+</svg>
